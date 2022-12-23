@@ -3,4 +3,4 @@ project(Sudoku)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(Sudoku main.cpp cmake-build-debug/Solver.cpp cmake-build-debug/Solver.h cmake-build-debug/Configuration.cpp cmake-build-debug/Configuration.h)
+add_executable(Sudoku main.cpp Solver.cpp Solver.h Configuration.cpp Configuration.h)
