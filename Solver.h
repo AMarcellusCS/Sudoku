@@ -13,8 +13,10 @@ using namespace std;
 #include <string>
 
 class Solver {
-    public:
-    static Configuration solve(Configuration currentConfig);
+public:
+    static vector<string> solve(Configuration currentConfig);
+private:
+    static vector <string> getPath(map <string, string> visited, string solution);
 };
 
 

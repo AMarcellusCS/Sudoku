@@ -8,6 +8,8 @@ using namespace std;
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <queue>
+#include <map>
 
 namespace std {
     template<>
@@ -59,4 +61,19 @@ void Configuration:: printBoard() {
             cout << board[x][y] << ' ';
         cout << endl;
     }
+}
+
+void Configuration::getNeighbors(std::queue<Configuration> queue, std::map<string, string> map) {
+    int x;
+    int y;
+    for(int i = 0; i < (DIM * DIM); i++)
+        if(board[i / DIM][i % DIM] == 0) {
+            x = i / DIM;
+            y = y % DIM;
+        }
+
+}
+
+bool Configuration::isSolution() {
+    return false;
 }

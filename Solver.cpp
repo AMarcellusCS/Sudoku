@@ -5,13 +5,30 @@
 #include <unordered_map>
 #include "Solver.h"
 
-Configuration Solver::solve(Configuration currentConfig) {
+vector<string> Solver::solve(Configuration currentConfig) {
     queue <Configuration> queue;
-    map <Configuration, Configuration> visited;
+    map <string, string> visited;
     Configuration null = Configuration();
-    int totalConfigs = 1;
-    queue.push(currentConfig); // switch to addall neighbors
-    visited.insert(pair<Configuration, Configuration>(currentConfig, null));
+    currentConfig.getNeighbors(queue, visited); // switch to addall neighbors
+    visited.insert(pair<string, string>(currentConfig.toString(), null.toString()));
     while (!queue.empty()) {
+        currentConfig = queue.front();
+        queue.pop();
+        if(currentConfig.isSolution())
+            return getPath(visited, currentConfig.toString());
+        else
+            currentConfig.getNeighbors(queue, visited);
     }
+    vector<string> returnNoSolution;
+    return returnNoSolution;
+}
+
+vector<string> Solver::getPath(map<string, string> visited, string solution) {
+    vector<string> path;
+    string current = solution;
+    while(visited[current].compare(Configuration().toString()) != 0) {
+        path.push_back(current);
+        current = visited[path.back()];
+    }
+
 }

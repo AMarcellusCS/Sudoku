@@ -10,6 +10,8 @@ using namespace std;
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <queue>
+#include <map>
 
 class Configuration {
 private:
@@ -20,6 +22,10 @@ public:
     explicit Configuration(string fileName);
     string toString();
     void printBoard();
+
+    void getNeighbors(std::queue<Configuration> queue, std::map<string, string> map);
+
+    bool isSolution();
 };
 
 
