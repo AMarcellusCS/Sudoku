@@ -13,16 +13,8 @@ using namespace std;
 #include <string>
 
 class Solver {
-    public: static Configuration solve(Configuration currentConfig){
-        queue<Configuration> queue;
-        map<string, string> visited;
-        int totalConfigs = 1;
-        //queue.push(currentConfig);
-        //visited.insert(currentConfig.toString(), 0);
-        while(!queue.empty()){
-
-        }
-    }
+    public:
+    static Configuration solve(Configuration currentConfig);
 };
 
 

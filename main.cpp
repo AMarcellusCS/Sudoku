@@ -3,6 +3,8 @@
 
 int main() {
     Configuration config = Configuration("game-1.txt");
-    //config.printBoard();
+    config.printBoard();
+//    printf("Press ENTER key to Continue\n");
+//    getchar();
     return 0;
 }
