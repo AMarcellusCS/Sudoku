@@ -15,8 +15,14 @@ vector<string> Solver::solve(Configuration currentConfig) {
         queue.pop();
         if(currentConfig.isGoal())
             return getPath(visited, currentConfig.toString());
-//        else
-//            currentConfig.getSuccessors(queue, visited);
+        else {
+            vector<Configuration> neighbors = currentConfig.getSuccessors();
+            for (auto &config : neighbors)
+                if(!visited.contains(config.toString()) && config.isValid()) {
+                    queue.push(config);
+                    visited.insert(pair<string, string>(config.toString(), currentConfig.toString()));
+                }
+        }
     }
     vector<string> returnNoSolution;
     return returnNoSolution;
@@ -29,5 +35,5 @@ vector<string> Solver::getPath(map<string, string> visited, string solution) {
         path.push_back(current);
         current = visited[path.back()];
     }
-
+    return path;
 }

@@ -11,6 +11,7 @@ using namespace std;
 #include <queue>
 #include <map>
 #include <algorithm>
+#include <set>
 
 namespace std {
     template<>
@@ -83,7 +84,7 @@ bool Configuration::isGoal() {
 }
 
 bool Configuration::isValid() {
-    return verticalCheck() && horizontalCheck() && sectionCheck();
+    return verticalCheck() && horizontalCheck() && sectionChecker();
 }
 
 void Configuration::nextCords() {
@@ -100,16 +101,47 @@ void Configuration::copyBoard(int childBoard[DIM][DIM]) {
         childBoard[i / DIM][i % DIM] = board[i / DIM][i % DIM];
 }
 
-bool Configuration::verticalCheck() {
-    return false;
+bool Configuration::verticalCheck(){
+    set<int> seenNumbers;
+    for(int i = 0; i < DIM; i++){
+        if(!seenNumbers.contains(this->board[i][yCord]))
+            seenNumbers.insert(this->board[i][yCord]);
+        else if (this->board[i][yCord] != 0)
+            return false;
+    }
+    return true;
 }
 
 bool Configuration::horizontalCheck() {
-    return false;
+    set<int> seenNumbers;
+    for(int i = 0; i < DIM; i++){
+        if(!seenNumbers.contains(this->board[xCord][i]))
+            seenNumbers.insert(this->board[xCord][i]);
+        else if (this->board[xCord][i] != 0)
+            return false;
+    }
+    return true;
 }
 
-bool Configuration::sectionCheck() {
-    return false;
+bool Configuration::checkSection(int startX, int endX, int startY, int endY){
+    set<int> seenNumbers;
+    for(int x = startX; x < endX; x++)
+        for(int y = startY; y < endY; y++)
+            if(!seenNumbers.contains(this->board[x][y]))
+                seenNumbers.insert(this->board[x][y]);
+            else if (this->board[x][y] != 0)
+                return false;
+    return true;
+}
+
+bool Configuration::sectionChecker() {
+    int dimensions = DIM/3;
+    for(int x = 0; x < dimensions; x++)
+        for(int y = 0; y < dimensions; y++)
+            if(!checkSection(x*MINIMUM_SECTION_SIZE,x*MINIMUM_SECTION_SIZE+3,
+                            y*MINIMUM_SECTION_SIZE,y*MINIMUM_SECTION_SIZE+3))
+                return false;
+    return true;
 }
 
 

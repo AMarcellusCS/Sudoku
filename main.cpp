@@ -1,16 +1,9 @@
 #include <iostream>
 #include "Configuration.h"
+#include "Solver.h"
 
 int main() {
     Configuration config = Configuration("game-1.txt");
-    config.printBoard();
-    config.getSuccessors();
-    //vector<Configuration> configVector = config.getSuccessors();
-    //configVector.begin()->printBoard();
-//    for (auto & configs : configVector)
-//        configs.printBoard();
-
-//    printf("Press ENTER key to Continue\n");
-//    getchar();
+    Solver.solve(config);
     return 0;
 }
