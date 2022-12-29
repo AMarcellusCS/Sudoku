@@ -9,15 +9,14 @@ vector<string> Solver::solve(Configuration currentConfig) {
     queue <Configuration> queue;
     map <string, string> visited;
     Configuration null = Configuration();
-    currentConfig.getNeighbors(queue, visited); // switch to addall neighbors
     visited.insert(pair<string, string>(currentConfig.toString(), null.toString()));
     while (!queue.empty()) {
         currentConfig = queue.front();
         queue.pop();
-        if(currentConfig.isSolution())
+        if(currentConfig.isGoal())
             return getPath(visited, currentConfig.toString());
-        else
-            currentConfig.getNeighbors(queue, visited);
+//        else
+//            currentConfig.getSuccessors(queue, visited);
     }
     vector<string> returnNoSolution;
     return returnNoSolution;

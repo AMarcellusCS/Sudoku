@@ -17,15 +17,35 @@ class Configuration {
 private:
     static const int DIM = 9;
     int board[DIM][DIM];
+    int xCord;
+    int yCord;
+
+    bool verticalCheck();
+
+    bool horizontalCheck();
+
+    bool sectionCheck();
+
+    void copyBoard(int childBoard[DIM][DIM]);
+
 public:
     explicit Configuration();
+
     explicit Configuration(string fileName);
+
+    explicit Configuration(int x, int y, int value, Configuration* parentConfig);
+
     string toString();
+
     void printBoard();
 
-    void getNeighbors(std::queue<Configuration> queue, std::map<string, string> map);
+    vector<Configuration> getSuccessors();//std::queue<Configuration> queue, std::map<string, string> map);
 
-    bool isSolution();
+    bool isValid();
+
+    bool isGoal();
+
+    void nextCords();
 };
 
 

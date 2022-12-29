@@ -10,6 +10,7 @@ using namespace std;
 #include <sstream>
 #include <queue>
 #include <map>
+#include <algorithm>
 
 namespace std {
     template<>
@@ -19,7 +20,7 @@ namespace std {
         }
     };
 }
-
+// this is a gross use, another way to check if at root of visited.
 Configuration::Configuration() {
     for (int x = 0; x < DIM; x++)
         for (int y = 0; y < DIM; y++)
@@ -45,9 +46,14 @@ Configuration:: Configuration(string fileName){
             board[x][y] = val;
         }
     }
+    this->nextCords();
     inputFile.close();
 }
-
+Configuration::Configuration(int x, int y, int value, Configuration* parentConfig) {
+    parentConfig -> copyBoard(this->board);
+    this->board[x][y] = value;
+    this->nextCords();
+}
  string Configuration:: toString(){
     string value;
     for(int i = 0; i < (DIM*DIM); i++)
@@ -63,17 +69,48 @@ void Configuration:: printBoard() {
     }
 }
 
-void Configuration::getNeighbors(std::queue<Configuration> queue, std::map<string, string> map) {
-    int x;
-    int y;
+vector<Configuration> Configuration::getSuccessors(){//std::queue<Configuration> queue, std::map<string, string> map) {
+    vector<Configuration> successors;
+    for(int j = 1; j <= 9; j++) {
+        Configuration newConfig = Configuration(this->xCord, this->yCord, j, this);
+        successors.push_back(newConfig);
+    }
+    return successors;
+}
+
+bool Configuration::isGoal() {
+    return this->xCord == DIM-1 && this->yCord == DIM-1;
+}
+
+bool Configuration::isValid() {
+    return verticalCheck() && horizontalCheck() && sectionCheck();
+}
+
+void Configuration::nextCords() {
     for(int i = 0; i < (DIM * DIM); i++)
         if(board[i / DIM][i % DIM] == 0) {
-            x = i / DIM;
-            y = y % DIM;
+            this->xCord = i / DIM;
+            this->yCord = i % DIM;
+            break;
         }
-
 }
 
-bool Configuration::isSolution() {
+void Configuration::copyBoard(int childBoard[DIM][DIM]) {
+    for(int i = 0; i < (DIM * DIM); i++)
+        childBoard[i / DIM][i % DIM] = board[i / DIM][i % DIM];
+}
+
+bool Configuration::verticalCheck() {
     return false;
 }
+
+bool Configuration::horizontalCheck() {
+    return false;
+}
+
+bool Configuration::sectionCheck() {
+    return false;
+}
+
+
+
