@@ -29,9 +29,8 @@ Configuration::Configuration() {
 }
 
 Configuration:: Configuration(string fileName){
-    for (int x = 0; x < DIM; x++)
-        for (int y = 0; y < DIM; y++)
-            board[x][y] = 0;
+    for(int i = 0; i < (DIM*DIM); i++)
+        board[i/DIM][i%DIM] = 0;
     ifstream inputFile;
     inputFile.open(fileName, ios::in);
     if(!inputFile.is_open())
@@ -47,13 +46,11 @@ Configuration:: Configuration(string fileName){
             board[x][y] = val;
         }
     }
-    this->nextCords();
     inputFile.close();
 }
 Configuration::Configuration(int x, int y, int value, Configuration* parentConfig) {
     parentConfig -> copyBoard(this->board);
     this->board[x][y] = value;
-    this->nextCords();
 }
  string Configuration:: toString(){
     string value;
@@ -142,6 +139,13 @@ bool Configuration::sectionChecker() {
                             y*MINIMUM_SECTION_SIZE,y*MINIMUM_SECTION_SIZE+3))
                 return false;
     return true;
+}
+
+Configuration::Configuration(string stringToConvert, bool nextCord) {
+    for(int i = 0; i < (DIM*DIM); i++)
+        board[i/DIM][i%DIM] = static_cast<int>(stringToConvert.at(i));
+    if(nextCord)
+        nextCords();
 }
 
 

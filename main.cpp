@@ -4,6 +4,8 @@
 
 int main() {
     Configuration config = Configuration("game-1.txt");
-    Solver.solve(config);
+    vector<string> path = Solver::solve(config);
+    Configuration(path.front(), false).printBoard();
+    Configuration(path.back(), false).printBoard();
     return 0;
 }

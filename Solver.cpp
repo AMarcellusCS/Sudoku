@@ -19,6 +19,7 @@ vector<string> Solver::solve(Configuration currentConfig) {
             vector<Configuration> neighbors = currentConfig.getSuccessors();
             for (auto &config : neighbors)
                 if(!visited.contains(config.toString()) && config.isValid()) {
+                    config.nextCords();
                     queue.push(config);
                     visited.insert(pair<string, string>(config.toString(), currentConfig.toString()));
                 }

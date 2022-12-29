@@ -38,6 +38,8 @@ public:
 
     explicit Configuration(int x, int y, int value, Configuration* parentConfig);
 
+    explicit Configuration(string stringToConvert, bool nextCord);
+
     string toString();
 
     void printBoard();
