@@ -26,6 +26,7 @@ Configuration::Configuration() {
     for (int x = 0; x < DIM; x++)
         for (int y = 0; y < DIM; y++)
             board[x][y] = 0;
+    nextCords();
 }
 
 Configuration:: Configuration(string fileName){
@@ -39,18 +40,20 @@ Configuration:: Configuration(string fileName){
         string line;
         while(getline(inputFile, line)){
             istringstream iss(line);
-            cout << line << endl;
             int x, y, val;
             if(!(iss >> x >> y >> val))
                 break;
             board[x][y] = val;
         }
     }
+    nextCords();
     inputFile.close();
 }
 Configuration::Configuration(int x, int y, int value, Configuration* parentConfig) {
     parentConfig -> copyBoard(this->board);
     this->board[x][y] = value;
+    this->xCord = x;
+    this->yCord = y;
 }
  string Configuration:: toString(){
     string value;
@@ -61,23 +64,35 @@ Configuration::Configuration(int x, int y, int value, Configuration* parentConfi
 
 void Configuration:: printBoard() {
     for (int x = 0; x < DIM; x++) {
-        for (int y = 0; y < DIM; y++)
-            cout << board[x][y] << ' ';
+        for (int y = 0; y < DIM; y++) {
+            if ((y+1) % MINIMUM_SECTION_SIZE == 0 && y != 0 && y != DIM-1)
+                cout << board[x][y] << " | ";
+            else
+                cout << board[x][y] << ' ';
+        }
         cout << endl;
+        if ((x+1) % MINIMUM_SECTION_SIZE == 0 && x != 0 && x != DIM-1)
+            cout << "------------------" << endl;
     }
+    cout << endl;
 }
 
 vector<Configuration> Configuration::getSuccessors(){//std::queue<Configuration> queue, std::map<string, string> map) {
     vector<Configuration> successors;
     for(int j = 1; j <= 9; j++) {
-        Configuration newConfig = Configuration(this->xCord, this->yCord, j, this);
-        successors.push_back(newConfig);
+        successors.emplace_back(xCord, yCord, j, this);
+        if(!successors.back().isValid())
+            successors.pop_back();
+        else {
+            successors.back().nextCords();
+            successors.back().printBoard();
+        }
     }
     return successors;
 }
 
 bool Configuration::isGoal() {
-    return this->xCord == DIM-1 && this->yCord == DIM-1;
+    return this->xCord == DIM && this->yCord == DIM;
 }
 
 bool Configuration::isValid() {
@@ -103,8 +118,10 @@ bool Configuration::verticalCheck(){
     for(int i = 0; i < DIM; i++){
         if(!seenNumbers.contains(this->board[i][yCord]))
             seenNumbers.insert(this->board[i][yCord]);
-        else if (this->board[i][yCord] != 0)
+        else if (this->board[i][yCord] != 0) {
+            cout << "X: " << xCord << " Y: " << yCord << " VERT PRUNED FOR VALUE: " << this->board[i][yCord] << endl;
             return false;
+        }
     }
     return true;
 }
@@ -114,8 +131,10 @@ bool Configuration::horizontalCheck() {
     for(int i = 0; i < DIM; i++){
         if(!seenNumbers.contains(this->board[xCord][i]))
             seenNumbers.insert(this->board[xCord][i]);
-        else if (this->board[xCord][i] != 0)
+        else if (this->board[xCord][i] != 0) {
+            cout << "X: " << xCord << " Y: " << yCord << " HORI PRUNED FOR VALUE: " << this->board[xCord][i] << endl;
             return false;
+        }
     }
     return true;
 }
@@ -126,8 +145,10 @@ bool Configuration::checkSection(int startX, int endX, int startY, int endY){
         for(int y = startY; y < endY; y++)
             if(!seenNumbers.contains(this->board[x][y]))
                 seenNumbers.insert(this->board[x][y]);
-            else if (this->board[x][y] != 0)
+            else if (this->board[x][y] != 0) {
+                cout << "X: " << xCord << " Y: " << yCord << " SECTION PRUNED FOR VALUE: " << this->board[x][y] << endl;
                 return false;
+            }
     return true;
 }
 

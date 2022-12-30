@@ -18,8 +18,8 @@ private:
     static const int DIM = 9;
     static const int MINIMUM_SECTION_SIZE = 3;
     int board[DIM][DIM];
-    int xCord;
-    int yCord;
+    int xCord = 0;
+    int yCord = 0;
 
     bool verticalCheck();
 

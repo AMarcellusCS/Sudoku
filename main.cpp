@@ -7,5 +7,10 @@ int main() {
     vector<string> path = Solver::solve(config);
     Configuration(path.front(), false).printBoard();
     Configuration(path.back(), false).printBoard();
+//    vector<Configuration> neighbors = config.getSuccessors().front().getSuccessors();
+//    for (auto &configs : neighbors){
+//        configs.nextCords();
+//        configs.printBoard();
+//    }
     return 0;
 }
