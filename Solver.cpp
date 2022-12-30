@@ -22,7 +22,6 @@ vector<string> Solver::solve(Configuration currentConfig) {
             vector<Configuration> neighbors = currentConfig.getSuccessors();
             totalConfigs += neighbors.size();
             cout << "TOTAL CONFIGS: " << totalConfigs << endl;
-            cout << "UNIQUE CONFIGS: " << visited.size() << endl;
             for (auto &config : neighbors) {
                 if (!visited.contains(config.toString())) {
                     queue.push(config);
