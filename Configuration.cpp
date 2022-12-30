@@ -63,6 +63,7 @@ Configuration::Configuration(int x, int y, int value, Configuration* parentConfi
 }
 
 void Configuration:: printBoard() {
+    cout << endl;
     for (int x = 0; x < DIM; x++) {
         for (int y = 0; y < DIM; y++) {
             if ((y+1) % MINIMUM_SECTION_SIZE == 0 && y != 0 && y != DIM-1)
@@ -92,7 +93,7 @@ vector<Configuration> Configuration::getSuccessors(){//std::queue<Configuration>
 }
 
 bool Configuration::isGoal() {
-    return this->xCord == DIM && this->yCord == DIM;
+    return this->board[DIM-1][DIM-1] != 0;
 }
 
 bool Configuration::isValid() {

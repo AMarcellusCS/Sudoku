@@ -11,12 +11,8 @@ vector<string> Solver::solve(Configuration currentConfig) {
     map <string, string> visited;
     Configuration null = Configuration();
     visited.insert(pair<string, string>(currentConfig.toString(), null.toString()));
-    vector<Configuration> initialSuccessors = currentConfig.getSuccessors();
-    for (int i = 0; i < initialSuccessors.size(); i++) {
-        queue.push(initialSuccessors.at(i));
-    }
-    long totalConfigs = 1 + queue.size();
-    cout << "TOTAL CONFIGS: " << totalConfigs << endl;
+    queue.push(currentConfig);
+    long totalConfigs = 1;
     while (!queue.empty()) {
         currentConfig = queue.front();
         queue.pop();
@@ -42,7 +38,7 @@ vector<string> Solver::solve(Configuration currentConfig) {
 vector<string> Solver::getPath(map<string, string> visited, string solution) {
     vector<string> path;
     string current = solution;
-    while(visited[current].compare(Configuration().toString()) != 0) {
+    while(visited.contains(current)) {
         path.push_back(current);
         current = visited[path.back()];
     }
