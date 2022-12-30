@@ -72,7 +72,7 @@ void Configuration:: printBoard() {
         }
         cout << endl;
         if ((x+1) % MINIMUM_SECTION_SIZE == 0 && x != 0 && x != DIM-1)
-            cout << "------------------" << endl;
+            cout << "---------------------" << endl;
     }
     cout << endl;
 }
