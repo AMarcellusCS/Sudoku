@@ -16,7 +16,7 @@ using namespace std;
 class Configuration {
 private:
     static const int DIM = 9;
-    static const int MINIMUM_SECTION_SIZE = 3;
+    static const int SECTION_SIZE = 3;
     int board[DIM][DIM];
     int xCord = 0;
     int yCord = 0;
@@ -25,11 +25,11 @@ private:
 
     bool horizontalCheck();
 
-    bool sectionChecker();
+    bool checkSection();
 
-    bool checkSection(int startX, int endX, int startY, int endY);
+    void copyBoard(int neighborsBoard[DIM][DIM]);
 
-    void copyBoard(int childBoard[DIM][DIM]);
+    void nextCords();
 
 public:
     explicit Configuration();
@@ -49,8 +49,6 @@ public:
     bool isValid();
 
     bool isGoal();
-
-    void nextCords();
 };
 
 
