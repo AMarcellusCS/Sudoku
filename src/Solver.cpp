@@ -23,12 +23,12 @@ vector<string> Solver::solve(Configuration currentConfig) {
                 path.push_back(current);
                 current = visited[path.back()];
             }
+            cout << "\nTOTAL CONFIGS: " << totalConfigs << endl;
             return path;
         }
         else {
             vector<Configuration> neighbors = currentConfig.getSuccessors();
             totalConfigs += neighbors.size();
-            cout << "TOTAL CONFIGS: " << totalConfigs << endl;
             for (auto &config : neighbors) {
                 if (!visited.contains(config.toString())) {
                     queue.push(config);
