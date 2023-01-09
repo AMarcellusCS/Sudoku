@@ -24,6 +24,7 @@ vector<string> Solver::solve(Configuration currentConfig) {
                 current = visited[path.back()];
             }
             cout << "\nTOTAL CONFIGS: " << totalConfigs << endl;
+            cout << "PATH LENGTH: " << path.size() << endl;
             return path;
         }
         else {
