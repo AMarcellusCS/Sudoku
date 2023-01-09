@@ -16,8 +16,15 @@ vector<string> Solver::solve(Configuration currentConfig) {
     while (!queue.empty()) {
         currentConfig = queue.front();
         queue.pop();
-        if(currentConfig.isGoal())
-            return getPath(visited, currentConfig.toString());
+        if (currentConfig.isGoal()){
+            vector<string> path;
+            string current = currentConfig.toString();
+            while (visited.contains(current)) {
+                path.push_back(current);
+                current = visited[path.back()];
+            }
+            return path;
+        }
         else {
             vector<Configuration> neighbors = currentConfig.getSuccessors();
             totalConfigs += neighbors.size();
@@ -30,16 +37,7 @@ vector<string> Solver::solve(Configuration currentConfig) {
             }
         }
     }
+    cout << "PUZZLE HAS NO SOLUTION" << endl;
     vector<string> returnNoSolution;
     return returnNoSolution;
-}
-
-vector<string> Solver::getPath(map<string, string> visited, string solution) {
-    vector<string> path;
-    string current = solution;
-    while(visited.contains(current)) {
-        path.push_back(current);
-        current = visited[path.back()];
-    }
-    return path;
 }
